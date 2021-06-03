@@ -32,6 +32,10 @@ import (
 // behavior.
 const DefaultLineEnding = "\n"
 
+// DefaultFloatPrecision defines the default float precision when float number is added.
+// -1 is the default value of precision so that float will keep default length as it should be when the user did not set it manually
+const DefaultFloatPrecision = -1
+
 // OmitKey defines the key to use when callers want to remove a key from log output.
 const OmitKey = ""
 
@@ -333,6 +337,10 @@ type EncoderConfig struct {
 	// Configures the field separator used by the console encoder. Defaults
 	// to tab.
 	ConsoleSeparator string `json:"consoleSeparator" yaml:"consoleSeparator"`
+
+	// float precision controls the length after dot in a float
+	// For example, 3.1415 will be 3.14 if floatPrecision is set to 2
+	FloatPrecision int `json:"floatPrecision" yaml:"floatPrecision"`
 }
 
 // ObjectEncoder is a strongly-typed, encoding-agnostic interface for adding a

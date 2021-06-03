@@ -78,6 +78,9 @@ type jsonEncoder struct {
 // pair) when unmarshaling, but users should attempt to avoid adding duplicate
 // keys.
 func NewJSONEncoder(cfg EncoderConfig) Encoder {
+	if cfg.FloatPrecision == 0 {
+		cfg.FloatPrecision = -1
+	}
 	return newJSONEncoder(cfg, false)
 }
 
@@ -454,7 +457,7 @@ func (enc *jsonEncoder) appendFloat(val float64, bitSize int) {
 	case math.IsInf(val, -1):
 		enc.buf.AppendString(`"-Inf"`)
 	default:
-		enc.buf.AppendFloat(val, bitSize)
+		enc.buf.AppendFloatWithPrecision(val, enc.FloatPrecision, bitSize)
 	}
 }
 
